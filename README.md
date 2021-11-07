@@ -2,6 +2,13 @@
 
 An object detector trained with a Kaggle GPU on One Piece images, using Tensorflow and a fine-tuned ssd resnet50. 
 
+# Model and configuration summary 
+
+- Class count : 1
+- Labels : ["character"]
+- Model type : detection 
+- Base model : ssd_resnet50_v1_fpn_640x640_coco17_tpu-8 
+
 # Results : screenshots
 
 ## With 1 character
