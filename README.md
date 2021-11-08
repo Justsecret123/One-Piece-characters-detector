@@ -34,6 +34,10 @@ An object detector trained with a Kaggle GPU on One Piece images, using Tensorfl
 
 # Useful links 
 
+## Tensorflow Serving container test script 
+- [On GitHub](Scripts/Prediction_OP_detection_model.py)
+- [Label map](Scripts/tf_label_map.pbtxt)
+
 ## Training notebook 
 
 - [Kaggle](https://www.kaggle.com/ibrahimserouis99/custom-object-detector-one-piece-characters)
