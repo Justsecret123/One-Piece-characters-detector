@@ -21,7 +21,7 @@ from object_detection.utils import visualization_utils as viz_utils
 classes = ["character"]
 
 # Image URL Location
-IMAGE_URL = "https://wallpapercave.com/wp/wp4865629.jpg"
+IMAGE_URL = "https://pbs.twimg.com/media/D14P-nqWsAE1_xA?format=jpg&name=small"
 
 
 # API endpoint
@@ -72,9 +72,9 @@ def main():
           category_index,
           use_normalized_coordinates=True,
           max_boxes_to_draw=30,
-          min_score_thresh=.6,
+          min_score_thresh=.2,
           agnostic_mode=False, 
-          line_thickness=10)
+          line_thickness=5)
 
     #Create the figure and save the file
     plt.figure()
