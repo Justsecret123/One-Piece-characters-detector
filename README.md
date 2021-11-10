@@ -39,6 +39,8 @@ An object detector trained with a Kaggle GPU on One Piece images, using Tensorfl
 
 # Useful links 
 
+## How to run inferences on a video, with openCV [Here](Scripts/Predict_with_video.py)
+
 ## Tensorflow Serving container test script 
 - [On GitHub](Scripts/Prediction_OP_detection_model.py)
 - [Label map](Scripts/tf_label_map.pbtxt)
