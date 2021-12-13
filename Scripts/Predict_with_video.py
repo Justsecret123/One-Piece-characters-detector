@@ -27,7 +27,7 @@ def get_detections(frame):
     num_detections = int(detections.pop("num_detections"))
     detections = {key: value[0, :num_detections].numpy() for key, value in detections.items()} # Create a dict from the results
     
-    detections["detection_classes"] = detections["detection_classes"].astype(np.int64) # Convert the detection classes into te proper format (int)
+    detections["detection_classes"] = detections["detection_classes"].astype(np.int64) # Convert the detection classes into the proper format (int)
     
     detections["num_detections"] = num_detections
     
@@ -69,6 +69,7 @@ def main(input_video, model, category_index):
     
     
     while (video.isOpened()):
+        
         ret, frame = video.read()
         
         if ret == True:
@@ -97,14 +98,14 @@ def main(input_video, model, category_index):
     
 
 
-
 if __name__ == "__main__":
     
-    input_video = "Zoro vs Kamazou.mp4"
-    model_path = "../OP_characters_detector/2"
+    input_video = "path_to_the_video"
+    model_path = "path_to_the_model"
     
     # Create the category index from the label map file
-    category_index = label_map_util.create_category_index_from_labelmap("tf_label_map.pbtxt",use_display_name=True)
+    category_index = label_map_util.create_category_index_from_labelmap("tf_label_map.pbtxt",
+                                                                        use_display_name=True)
     
     # Load the trained model
     model = tf.saved_model.load(model_path)
