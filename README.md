@@ -52,7 +52,7 @@ An object detector trained with a Kaggle GPU on One Piece images, using Tensorfl
 
 ## How to concatenate mutliple TFRecord files into the Training and Validation sets 
 
-- [Kaggle](https://www.kaggle.com/ibrahimserouis99/custom-object-detector-one-piece-characters)
+- [Kaggle](https://www.kaggle.com/ibrahimserouis99/generate-training-and-validation-records)
 - [GitHub](Notebooks/generate-the-training-and-validation-tfrecords.ipynb)
 
 ## Training pipeline configuration file : [Here](Config/pipeline_batch_size_8.config)
