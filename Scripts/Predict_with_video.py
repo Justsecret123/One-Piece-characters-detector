@@ -1,40 +1,41 @@
 # -*- coding: utf-8 -*-
 """
 Created on Wed Nov 10 11:18:27 2021
-
 @author: Ibrah
 """
 
 import cv2
 import tensorflow as tf 
 import numpy as np 
-
 from object_detection.utils import label_map_util
 from object_detection.utils import visualization_utils as viz_utils
 
 
-# Get the detections boxes, scores and classes from the input frame
+
 def get_detections(frame):
+    """Get the detections boxes, scores and classes from the input frame"""
     
     # Convert the input array into a tensor
-    input_tensor = np.expand_dims(frame,0).astype(np.uint8) #Create a batch then convert the input image values into unsigned ints ranging from 0 to 255
+    # Create a batch then convert the input image values into unsigned ints ranging from 0 to 255
+    input_tensor = np.expand_dims(frame,0).astype(np.uint8) 
     
     # Run the inference
-    detections = model(input_tensor)
+    detections = MODEL(input_tensor)
     
     # Get the results 
-    
     num_detections = int(detections.pop("num_detections"))
-    detections = {key: value[0, :num_detections].numpy() for key, value in detections.items()} # Create a dict from the results
-    
-    detections["detection_classes"] = detections["detection_classes"].astype(np.int64) # Convert the detection classes into the proper format (int)
+    # Create a dict from the results
+    detections = {key: value[0, :num_detections].numpy() for key, value in detections.items()} 
+    # Convert the detection classes into te proper format (int)
+    detections["detection_classes"] = detections["detection_classes"].astype(np.int64) 
     
     detections["num_detections"] = num_detections
     
     return detections
 
-# Write the detections results on a frame
-def write_visualizations(image, boxes, classes, scores, category_index):
+
+def write_visualizations(image, boxes, classes, scores):
+    """Write the detections results on a frame"""
     
     # Visualize the results then draw the output boxes and classes on images
     viz_utils.visualize_boxes_and_labels_on_image_array(
@@ -42,7 +43,7 @@ def write_visualizations(image, boxes, classes, scores, category_index):
         boxes, 
         classes, 
         scores, 
-        category_index,
+        CATEGORY_INDEX,
         use_normalized_coordinates=True,
         max_boxes_to_draw=30,
         min_score_thresh=.3,
@@ -53,26 +54,32 @@ def write_visualizations(image, boxes, classes, scores, category_index):
     return image
     
 
-def main(input_video, model, category_index):
+def main():
+    """Main Loop"""
     
-    #Read the video
-    video = cv2.VideoCapture(input_video)
+    # Read the video
+    video = cv2.VideoCapture(INPUT_VIDEO)
     
-    
-    #Get the image size 
+    # Get the image size 
+    print("\nRetrieving the parameters...\n--------------------------")
     width, height = int(video.get(3)), int(video.get(4))
+    frame_count = int(video.get(cv2.CAP_PROP_FRAME_COUNT))
     
     # Output video 
     out = cv2.VideoWriter("result.avi", cv2.VideoWriter_fourcc("M","J","P","G"),30,(width,height))
     
-    print(f"Video size: {(width,height)}")
+    print(f"Video size: {(width,height)} | Frame count : {frame_count}")
     
+    i = 0
     
-    while (video.isOpened()):
+    print("\nStarting the detection...\n--------------------------")
+    
+    while video.isOpened():
         
         ret, frame = video.read()
         
         if ret == True:
+            print(f"Processing frame {i}...")
             image = frame.copy()
             
             # Get the detections boxes, classes and scores
@@ -82,33 +89,33 @@ def main(input_video, model, category_index):
             output_image = write_visualizations(image,
                                                 detections["detection_boxes"], 
                                                 detections["detection_classes"],
-                                                detections["detection_scores"],
-                                                category_index)
+                                                detections["detection_scores"]
+                                                )
             
             # Write the frame with the detections to the output file
             out.write(output_image)
+            i+=1
             
-    
-    #Release the video object
+    # Release the video object
     video.release()
     out.release()
     
-    #Close all the windows
+    # Close all the windows
     cv2.destroyAllWindows()
     
 
-
 if __name__ == "__main__":
     
-    input_video = "path_to_the_video"
-    model_path = "path_to_the_model"
+    INPUT_VIDEO = "Zoro vs Kamazou.mp4"
+    MODEL_PATH = "../OP_characters_detector/4"
     
     # Create the category index from the label map file
-    category_index = label_map_util.create_category_index_from_labelmap("tf_label_map.pbtxt",
-                                                                        use_display_name=True)
+    CATEGORY_INDEX = label_map_util.create_category_index_from_labelmap("tf_label_map.pbtxt")
     
     # Load the trained model
-    model = tf.saved_model.load(model_path)
+    print("\nLoading the model...\n--------------------------")
+    MODEL = tf.saved_model.load(MODEL_PATH)
+    print("\nDone.")
     
+    main()
     
-    main(input_video, model, category_index)
