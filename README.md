@@ -6,6 +6,10 @@ An object detector trained with a Kaggle GPU on One Piece images, using Tensorfl
 
 > **Kaggle Notebook link:  [Kaggle notebook](https://www.kaggle.com/ibrahimserouis99/custom-object-detector-one-piece-characters)
 
+<a href="https://www.linkedin.com/in/ibrahim-serouis-b05378181/">
+  <img src="https://img.shields.io/badge/LinkedIn-Ibrahim%20Serouis-blue?link=http://left&link=http://right)"/>
+</a>
+
 # Model and configuration summary 
 
 - Class count : 1
