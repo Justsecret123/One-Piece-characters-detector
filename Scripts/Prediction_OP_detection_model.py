@@ -6,8 +6,8 @@ Created on Mon Nov 07 19:19:22 2021
 """
 
 import io
-import cv2
 import json
+import cv2
 
 import numpy as np
 import requests
@@ -17,77 +17,75 @@ from PIL import Image
 from object_detection.utils import label_map_util
 from object_detection.utils import visualization_utils as viz_utils
 
-# Define classes
-classes = ["character"]
 
 # Image URL Location
-IMAGE_URL = "https://image.animedigitalnetwork.fr/license/onepiece/arc1/web/affiche_370x0.jpg"
+IMAGE_URL = "https://wallpapercave.com/wp/wp4865629.jpg"
+
 
 # API endpoint
 SERVER_URL = "http://localhost:8501/v1/models/OP_characters_detector:predict"
 
 
-def main(url):
+def main():
+    """Main loop"""
     
-    url = IMAGE_URL if url=="" else url
     # Download the image
-    dl_request = requests.get(url, stream=True)
+    dl_request = requests.get(IMAGE_URL, stream=True)
     dl_request.raise_for_status()
 
     # Compose a JSON Predict request (send the image tensor)
-    jpeg_rgb = Image.open(io.BytesIO(dl_request.content))
+    jpeg_rgb = Image.open(io.BytesIO(dl_request.content))   
 
     # Normalize and batchify the image
     inputs = np.array(jpeg_rgb)
-    inputs = cv2.cvtColor(inputs, cv2.COLOR_BGRA2BGR)  # Convert the image into a 3-channel image
-    image_np_with_detections = inputs.copy().astype(np.uint8)
+    inputs = cv2.cvtColor(inputs, cv2.COLOR_BGRA2BGR) # Convert the image into a 3-channel image
+    image_np_with_detections = inputs.copy().astype(np.uint8) 
 
-    input_tensor = np.expand_dims(inputs, 0).astype(
-        np.uint8)  # Create a batch then convert the input image values into unsigned ints ranging from 0 to 255
-    serialized_image = input_tensor.tolist()  # Convert the image into a serializable object
-    predict_request = json.dumps({"instances": serialized_image})
-
-    # Send a request to warm up the model.
+    # Create a batch then convert the input image values into unsigned ints ranging from 0 to 255
+    input_tensor = np.expand_dims(inputs, 0).astype(np.uint8) 
+    serialized_image = input_tensor.tolist() # Convert the image into a serializable object
+    predict_request = json.dumps({"instances": serialized_image })
+    
+    # Send a request to warm-up the model.
     for _ in range(1):
         response = requests.post(SERVER_URL, data=predict_request)
         response.raise_for_status()
-
+        
+    detections = []
     total_time = 0
-
+    
     # Send the request
     response = requests.post(SERVER_URL, data=predict_request)
     response.raise_for_status()
     detections = response.json()["predictions"][0]
     total_time += response.elapsed.total_seconds()
-
+        
     # Create the label map
-    category_index = label_map_util.create_category_index_from_labelmap("tf_label_map.pbtxt", use_display_name=True)
-
+    category_index = label_map_util.create_category_index_from_labelmap("tf_label_map.pbtxt")
+    
     # Visualize the results
     viz_utils.visualize_boxes_and_labels_on_image_array(
-        image_np_with_detections,
-        np.array(detections['detection_boxes']),
-        np.array(detections['detection_classes']).astype(np.int64),
-        np.array(detections['detection_scores']),
-        category_index,
-        use_normalized_coordinates=True,
-        max_boxes_to_draw=30,
-        min_score_thresh=.35,
-        agnostic_mode=False,
-        line_thickness=5)
+          image_np_with_detections,
+          np.array(detections['detection_boxes']),
+          np.array(detections['detection_classes']).astype(np.int64),
+          np.array(detections['detection_scores']),
+          category_index,
+          use_normalized_coordinates=True,
+          max_boxes_to_draw=30,
+          min_score_thresh=.6,
+          agnostic_mode=False, 
+          line_thickness=10)
 
     # Create the figure and save the file
     plt.figure()
+    plt.axis("off")
     plt.title("Results")
-    image = Image.fromarray(image_np_with_detections)
-    image.show()
+    plt.imshow(image_np_with_detections)
     plt.savefig("result.png")
-
-    print(f"Done. Total time: {total_time}s")
+    
+    print(f"Done. Total time: {total_time}s")    
 
 
 if __name__ == '__main__':
+    main()
     
-    url = str(input("Enter the image url: "))
-    
-    main(url)
