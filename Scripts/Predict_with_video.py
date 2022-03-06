@@ -25,10 +25,9 @@ def get_detections(frame):
     # Get the results 
     num_detections = int(detections.pop("num_detections"))
     # Create a dict from the results
-    detections = {key: value[0, :num_detections].numpy() for key, value in detections.items()} 
+    detections = {key: value[0, :num_detections].numpy() for key,value in detections.items()} 
     # Convert the detection classes into te proper format (int)
-    detections["detection_classes"] = detections["detection_classes"].astype(np.int64) 
-    
+    detections["detection_classes"] = detections["detection_classes"].astype(np.uint8) 
     detections["num_detections"] = num_detections
     
     return detections
@@ -62,11 +61,11 @@ def main():
     
     # Get the image size 
     print("\nRetrieving the parameters...\n--------------------------")
-    width, height = int(video.get(3)), int(video.get(4))
+    width, height = int(video.get(cv2.CAP_PROP_FRAME_WIDTH)), int(video.get(cv2.CAP_PROP_FRAME_HEIGHT))
     frame_count = int(video.get(cv2.CAP_PROP_FRAME_COUNT))
     
-    # Output video 
-    out = cv2.VideoWriter("result.avi", cv2.VideoWriter_fourcc("M","J","P","G"),30,(width,height))
+    # Setup the video writer
+    out = cv2.VideoWriter("result2.avi", cv2.VideoWriter_fourcc("M","J","P","G"), 30, (width,height))
     
     print(f"Video size: {(width,height)} | Frame count : {frame_count}")
     

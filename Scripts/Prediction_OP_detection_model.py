@@ -49,7 +49,7 @@ def main():
     serialized_image = input_tensor.tolist() # Convert the image into a serializable object
     predict_request = json.dumps({"instances": serialized_image })
     
-    # Send a request to warm-up the model.
+    # Send a request to warm-up the model
     for _ in range(1):
         response = requests.post(SERVER_URL, data=predict_request)
         response.raise_for_status()
@@ -71,9 +71,9 @@ def main():
     # Visualize the results
     viz_utils.visualize_boxes_and_labels_on_image_array(
           image_np_with_detections,
-          np.array(detections['detection_boxes']),
-          np.array(detections['detection_classes']).astype(np.int64),
-          np.array(detections['detection_scores']),
+          np.array(detections["detection_boxes"]),
+          np.array(detections["detection_classes"]).astype(np.uint8),
+          np.array(detections["detection_scores"]),
           category_index,
           use_normalized_coordinates=True,
           max_boxes_to_draw=30,
