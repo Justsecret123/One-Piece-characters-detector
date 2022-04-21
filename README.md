@@ -34,7 +34,6 @@ An object detector trained with a Kaggle GPU on One Piece images, using Tensorfl
 
 ![First test](Screenshots/Results_3_characters_1.PNG)
 ![Second test](Screenshots/Results_3_characters_2.PNG)
-![Third test](Screenshots/Results_3_characters_3.png)
 
 ## With 4 characters
 
