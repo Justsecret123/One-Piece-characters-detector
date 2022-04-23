@@ -2,9 +2,11 @@
 
 An object detector trained with a Kaggle GPU on One Piece images, using Tensorflow and a fine-tuned ssd resnet50. 
 
-> **Deployed on my personal Docker Hub repository: *Click here* [Click here](https://hub.docker.com/repository/docker/ibrahimserouis/my-tensorflow-models)
+> **Deployed on my [personal Docker Hub repository](https://hub.docker.com/repository/docker/ibrahimserouis/my-tensorflow-models)
 
 > **Kaggle Notebook link:  [Kaggle notebook](https://www.kaggle.com/ibrahimserouis99/custom-object-detector-one-piece-characters)
+
+> **One Piece Detector SavedModel : [Drive](https://drive.google.com/drive/folders/11FVvs6Z7yRLAlJgoclrUEnzlsX8uzfkB?usp=sharing)
 
 <a href="https://www.linkedin.com/in/ibrahim-serouis-b05378181/">
   <img src="https://img.shields.io/badge/LinkedIn-Ibrahim%20Serouis-blue?link=http://left&link=http://right)"/>
@@ -41,7 +43,17 @@ An object detector trained with a Kaggle GPU on One Piece images, using Tensorfl
 
 # Useful links 
 
-## How to run inferences on a video, with openCV [Here](Scripts/Predict_with_video.py)
+## How to run inferences on a video : [commnand line runner](https://github.com/Justsecret123/One-Piece-characters-detector/blob/main/Scripts/op_detector_video.py)
+
+> Note : Before running the script, you should first download the One Piece object detector model [here](https://drive.google.com/drive/folders/11FVvs6Z7yRLAlJgoclrUEnzlsX8uzfkB?usp=sharing)
+
+### Args
+![Command line runner](Screenshots/command_line_video_args.PNG)
+
+### Execution example
+![Execution](/Screenshots/command_line_runner.PNG)
+
+Check the [sample command for executing the command line runner](/Scripts/op_detector_video.bat)
 
 ## Tensorflow Serving container test script 
 - [On GitHub](Scripts/Prediction_OP_detection_model.py)
