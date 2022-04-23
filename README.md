@@ -45,7 +45,7 @@ An object detector trained with a Kaggle GPU on One Piece images, using Tensorfl
 
 ## How to run inferences on a video : [commnand line runner](https://github.com/Justsecret123/One-Piece-characters-detector/blob/main/Scripts/op_detector_video.py)
 
-> Note : Before running the script, you should first download the One Piece object detector model [here](https://drive.google.com/drive/folders/11FVvs6Z7yRLAlJgoclrUEnzlsX8uzfkB?usp=sharing)
+> Note : Before running the script, you must first download the One Piece object detector model [here](https://drive.google.com/drive/folders/11FVvs6Z7yRLAlJgoclrUEnzlsX8uzfkB?usp=sharing).
 
 ### Args
 ![Command line runner](Screenshots/command_line_video_args.PNG)
