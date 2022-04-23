@@ -73,8 +73,8 @@ Check the [sample command for executing the command line runner](/Scripts/op_det
 
 ## Prerequisites 
 
-- Python 3.0 or higher 
-- Tensorflow 2.0 or higher 
+- Python 3.7 or higher 
+- Tensorflow 2.6 or higher 
 - Tensorflow Object Detection API
 - NumPy
 - Matplotlib
