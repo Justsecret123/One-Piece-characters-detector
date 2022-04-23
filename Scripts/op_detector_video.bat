@@ -1,0 +1,1 @@
+python op_detector_video.py -model ../OP_characters_detector/4 -labelmap "tf_label_map.pbtxt" -input "Zoro vs Kamazou.mp4" -output "clr_video.avi" -thickness 4 -fps 30
